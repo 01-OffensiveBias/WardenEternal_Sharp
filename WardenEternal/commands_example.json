@@ -1,0 +1,10 @@
+{
+  "Enabled": [
+    "EnabledCommandClass",
+    "AnotherEnabledCommand"
+  ],
+  "Disabled": [
+    "DisabledCommandClass",
+    "AnotherDisabledCommand"
+  ]
+}
