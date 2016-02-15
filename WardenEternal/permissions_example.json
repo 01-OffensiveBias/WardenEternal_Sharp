@@ -1,0 +1,17 @@
+﻿{
+  "Roles": {
+    "Guest": [
+      "some_command",
+      "some_other_command"
+    ],
+    "Admin": [
+      "*",
+      "wildcard_gives_all_permissions"
+    ]
+  },
+  "Members": {
+    "userid_goes_here": [
+      "Admin"
+    ]
+  }
+}

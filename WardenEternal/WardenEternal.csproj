@@ -63,6 +63,8 @@
     <Compile Include="ClientConfiguration.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\Ping.cs" />
+    <Compile Include="Permissions\Member.cs" />
+    <Compile Include="Permissions\Role.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -77,6 +79,12 @@
     </None>
     <None Include="config_example.json" />
     <None Include="packages.config" />
+    <None Include="permissions_example.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="permissions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

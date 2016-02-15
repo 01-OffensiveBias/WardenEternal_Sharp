@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DiscordSharp;
 using WardenEternal.Commands;
+using WardenEternal.Permissions;
 
 namespace WardenEternal
 {
@@ -31,18 +32,30 @@ namespace WardenEternal
         // Is having this event handler as async even useful?
         private static async void _client_PrivateMessageReceived(object sender, DiscordPrivateMessageEventArgs e)
         {
-            Console.WriteLine($"Private Message <- [{e.author.user.username}]: \"{e.message}\"");
+            Console.WriteLine($"Private Message <- [{e.author.user.username} ({e.author.user.id})]: \"{e.message}\"");
             string[] parts = e.message.Split(' ');
             string cmd = parts.First();
-            string[] cmdArgs = new string[parts.Length - 1];
 
-            for (int i = 1; i < parts.Length; i++)
+            if (Command.Lookup(cmd) == null)
             {
-                cmdArgs[i] = parts[i];
+                _client.SendMessageToUser("Command not found", e.author);
             }
+            else if (Member.GetMemberById(e.author.user.id).IsPermitted(cmd))
+            {
+                string[] cmdArgs = new string[parts.Length - 1];
 
-            // TODO Implement error reporting
-            await Task.Run(() => Command.Lookup(cmd).Run(_client, e, cmdArgs));
+                for (int i = 1; i < parts.Length; i++)
+                {
+                    cmdArgs[i] = parts[i];
+                }
+
+                // TODO Implement error reporting
+                await Task.Run(() => Command.Lookup(cmd).Run(_client, e, cmdArgs));
+            }
+            else
+            {
+                _client.SendMessageToUser("You do not have permission to run this command", e.author);
+            }
         }
 
         private static void Init()
