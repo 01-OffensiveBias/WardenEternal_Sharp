@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace WardenEternal.Permissions
 {
+    // Extend DiscordSharp.DiscordMember?
     internal class Member
     {
         public static List<Member> MemberList { get; }
@@ -31,6 +32,16 @@ namespace WardenEternal.Permissions
         static Member()
         {
             MemberList = new List<Member>();
+
+            ReloadMembers();
+        }
+
+        public static void ReloadMembers()
+        {
+            if (MemberList.Count > 0)
+            {
+                MemberList.RemoveAll(v => true);
+            }
 
             JObject config = JObject.Parse(File.ReadAllText("permissions.json"));
 

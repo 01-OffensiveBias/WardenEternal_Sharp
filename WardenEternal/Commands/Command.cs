@@ -110,6 +110,8 @@ namespace WardenEternal.Commands
             return $"Could not find any specific usage help for the command \"{Name}\"";
         }
 
+        // Should I change run to return a string that is sent back to the user?
+        // This could easily allow adding a Pipe operator
         public abstract void Run(DiscordClient client, DiscordPrivateMessageEventArgs e, string[] args);
     }
 }

@@ -30,9 +30,19 @@ namespace WardenEternal.Permissions
         {
             RoleList = new List<Role>();
 
+            ReloadRoles();
+        }
+
+        public static void ReloadRoles()
+        {
+            if (RoleList.Count > 0)
+            {
+                RoleList.RemoveAll(v => true);
+            }
+
             JObject config = JObject.Parse(File.ReadAllText("permissions.json"));
 
-            foreach (JProperty role in ((JObject) config.SelectToken("Roles")).Properties())
+            foreach (JProperty role in ((JObject)config.SelectToken("Roles")).Properties())
             {
                 Role newRole = new Role(role.Name);
                 foreach (JToken command in config.SelectToken($"Roles.{role.Name}"))
@@ -50,6 +60,7 @@ namespace WardenEternal.Permissions
 
         public static bool IsPermitted(Role role, string command)
         {
+            // TODO
             return true;
         }
     }

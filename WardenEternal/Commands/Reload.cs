@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DiscordSharp;
+using WardenEternal.Permissions;
 
 namespace WardenEternal.Commands
 {
@@ -11,7 +12,7 @@ namespace WardenEternal.Commands
     {
         public override string GetUsage()
         {
-            return base.GetUsage();
+            return "Reloads the specified system.\n Usage: Reload {System} where System is [Commands, Permissions]";
         }
 
         public override void Run(DiscordClient client, DiscordPrivateMessageEventArgs e, string[] args)
@@ -26,7 +27,9 @@ namespace WardenEternal.Commands
                         break;
 
                     case "Permissions":
-                        // TODO Implement permissions reloading
+                        Member.ReloadMembers();
+                        Role.ReloadRoles();
+                        client.SendMessageToUser("Reloaded permissions", e.author);
                         break;
 
                     default:
