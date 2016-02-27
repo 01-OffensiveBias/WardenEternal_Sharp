@@ -11,7 +11,7 @@ using DiscordSharp;
 
 namespace WardenEternal.Commands
 {
-    internal abstract class Command
+    public abstract class Command
     {
         public static List<Command> CommandList { get; }
         public bool IsEnabled { get; private set; }
@@ -27,7 +27,27 @@ namespace WardenEternal.Commands
         {
             CommandList = new List<Command>();
 
+            ReloadCommands();
+        }
+
+        private static Command Instantiate(string command)
+        {
+            dynamic type = Assembly
+                .GetExecutingAssembly()
+                .GetTypes()
+                .First(t => t.Name == command);
+
+            return (Command) Activator.CreateInstance(type);
+        }
+
+        public static void ReloadCommands()
+        {
             JObject commands = JObject.Parse(File.ReadAllText("commands.json"));
+
+            if (CommandList.Count > 0)
+            {
+                CommandList.RemoveAll(x => true);
+            }
 
             // TODO Handle errors from invalid class names
 
@@ -42,16 +62,6 @@ namespace WardenEternal.Commands
             {
                 CommandList.Add(Instantiate(dCommand.ToString()));
             }
-        }
-
-        private static Command Instantiate(string command)
-        {
-            dynamic type = Assembly
-                .GetExecutingAssembly()
-                .GetTypes()
-                .First(t => t.Name == command);
-
-            return (Command) Activator.CreateInstance(type);
         }
 
         public void Enable()
@@ -93,6 +103,11 @@ namespace WardenEternal.Commands
         public static Command Lookup(string command)
         {
             return CommandList.Find(c => c.Name == command);
+        }
+
+        public virtual string GetUsage()
+        {
+            return $"Could not find any specific usage help for the command \"{Name}\"";
         }
 
         public abstract void Run(DiscordClient client, DiscordPrivateMessageEventArgs e, string[] args);

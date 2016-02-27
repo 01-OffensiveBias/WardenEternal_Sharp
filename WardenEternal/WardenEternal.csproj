@@ -34,8 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DiscordSharp, Version=0.5.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DiscordSharp.0.5.1.2-alpha\lib\DiscordSharp.dll</HintPath>
+    <Reference Include="DiscordSharp, Version=0.5.3.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DiscordSharp.0.5.3.4-alpha\lib\DiscordSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
@@ -58,11 +58,17 @@
       <HintPath>..\packages\WebSocketSharp.1.0.3-rc9\lib\websocket-sharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="WebSocket4Net, Version=0.14.1.0, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebSocket4Net.0.14.1\lib\net45\WebSocket4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientConfiguration.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\Help.cs" />
     <Compile Include="Commands\Ping.cs" />
+    <Compile Include="Commands\Reload.cs" />
     <Compile Include="Permissions\Member.cs" />
     <Compile Include="Permissions\Role.cs" />
     <Compile Include="Program.cs" />
@@ -79,13 +85,14 @@
     </None>
     <None Include="config_example.json" />
     <None Include="packages.config" />
-    <None Include="permissions.json" />
-    <None Include="permissions_example.json">
+    <None Include="permissions.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="permissions_example.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="opus.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

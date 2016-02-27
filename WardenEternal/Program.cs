@@ -25,30 +25,32 @@ namespace WardenEternal
 
         private static void _client_Connected(object sender, DiscordConnectEventArgs e)
         {
-            Console.WriteLine($"Connected as user \"{e.user.user.username}\"");
+            Console.WriteLine($"Connected as user \"{e.user.Username}\"");
         }
 
         // TODO Implement permissions system
         // Is having this event handler as async even useful?
         private static async void _client_PrivateMessageReceived(object sender, DiscordPrivateMessageEventArgs e)
         {
-            Console.WriteLine($"Private Message <- [{e.author.user.username} ({e.author.user.id})]: \"{e.message}\"");
+            Console.WriteLine($"Private Message <- [{e.author.Username} ({e.author.ID})]: \"{e.message}\"");
             string[] parts = e.message.Split(' ');
             string cmd = parts.First();
 
+            // Redundant Lookups
             if (Command.Lookup(cmd) == null)
             {
                 _client.SendMessageToUser("Command not found", e.author);
             }
-            else if (Member.GetMemberById(e.author.user.id).IsPermitted(cmd))
+            else if (Member.GetMemberById(e.author.ID).IsPermitted(cmd))
             {
                 string[] cmdArgs = new string[parts.Length - 1];
 
                 for (int i = 1; i < parts.Length; i++)
                 {
-                    cmdArgs[i] = parts[i];
+                    cmdArgs[i - 1] = parts[i];
                 }
 
+                // Redundant Lookups
                 // TODO Implement error reporting
                 await Task.Run(() => Command.Lookup(cmd).Run(_client, e, cmdArgs));
             }
