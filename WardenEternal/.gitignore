@@ -8,6 +8,7 @@
 # Private Information
 config.json
 commands.json
+permissions.json
 
 # User-specific files
 *.suo
